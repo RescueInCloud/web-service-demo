@@ -13,50 +13,7 @@
 	000	User registration successfully.
 	001	$user is already registered, please use another username.
 	
-	Add a friend
-	=== = ======
-	100		Friendship request sent.
-	101		They are already friends.
-	102		$user is not registered.
 	
-	Request a new game
-	======= = === ====
-	200		New game added, waiting for player to accept the request...
-	201		There is already a game in progress.
-	202		They are not friends.
-	203		$user is not registered.
-	204		They have another game in progress.
-	205		They have another request. They should accept or refuse that request.	
-	
-	Response a request game
-	======== = ======= ====
-	300		Accepted game.
-	301		Refused game.
-	302		The game is already in progress.
-	303		The game does not exists.
-	
-	Make a move
-	==== = ====
-	400		New move added.
-	401		The game is not ready.
-	402		The game does not exists.
-	403		Invalid player, the player do not belong to the game.
-	404		Error 404
-	
-	Login
-	=====
-	500		Login succesfull.
-	501		Name or password are wrong.
-	
-	Login
-	=====
-	600		Updated complete.
-	601		Fail at updating id.
-	
-	Response a friendship request
-	======== = ========== =======
-	700		Friendship completed.
-	701		Friendship rejected.
 	
 */
  
@@ -80,30 +37,32 @@ class DB_Functions {
 	
 	
 	
-	public function lista_farmacos($user_name){
-		// search if the user is already added in gcm_users
-		echo $user_name;
+	public function lista_farmacos($email){
+		
 		$sql = $this->con->prepare('
-		SELECT *
+		SELECT f.*
 		FROM relnm_farmacos_publicos_usuarios fu
 		INNER JOIN usuarios u ON fu.email_usuario=u.email_usuario
+        INNER JOIN farmacos_publicos f ON f.id_farmaco=fu.id_farmaco
 		WHERE u.email_usuario=?');
-		$sql->execute(array($user_name));
-		$query = $sql->fetchAll();
-
-		return $query;
+		
+		$sql->execute(array($email));
+		$filas = $sql->fetchAll();
+		$result=array("code"=>"101", "message"=>$filas);
+		return $result;
+	
 	}
 	
 	public function login($email){
+                
+		$result=array("code"=>"303", "message"=>"hola mundo");
+		return $result;
+		
+		
+	}
 	
-                
-        	$result=array("code"=>"303", "message"=>"holllaaaaa");
-                
-		
-
-			return $result;
-		
-		
+	public function close(){
+		$this->con = null;
 	}
 	
 		

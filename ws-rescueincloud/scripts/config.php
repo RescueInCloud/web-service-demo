@@ -11,6 +11,6 @@ define("DB_DATABASE", "u292523446_mem");
 define("DB_HOST", "localhost");
 define("DB_USER", "root");
 define("DB_PASSWORD", "");
-define("DB_DATABASE", "rescueincloud");
+define("DB_DATABASE", "ems");
  
 ?>
